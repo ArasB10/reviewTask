@@ -11,7 +11,8 @@ namespace Service
     {
         public bool Validate(string numberPlate)
         {
-            return numberPlate.All(Char.IsLetterOrDigit);
+
+            return !String.IsNullOrEmpty(numberPlate) && numberPlate.All(Char.IsLetterOrDigit);
         }
     }
 }

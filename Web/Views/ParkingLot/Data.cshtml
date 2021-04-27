@@ -11,11 +11,11 @@
 
         if (space.IsFree)
         {
-        <span>Free</span>
+        <span>Free @(space.HaveElectricSupport? "(Eve)": "")</span>
         }
         else
         {
-        <span> @space.CarNumber</span>
+        <span> @space.CarNumber @(space.HaveElectricSupport? "(Eve)": "")</span>
         }
 
         }

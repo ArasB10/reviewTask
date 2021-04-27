@@ -17,6 +17,7 @@ namespace Service
     public class FloorService: IFloorService
     {
         private readonly IFloorRepository _floorRepository;
+        private readonly string _electricCarPrefix = "EV";
 
         public FloorService(IFloorRepository floorRepository)
         {
@@ -37,6 +38,16 @@ namespace Service
             if (floors.Count == 0)
             {
                 return false;
+            }
+
+            if (carNumber.StartsWith(_electricCarPrefix))
+            {
+                var electricFloors = floors.Where(FloorHasFreeElectricSpace).ToList();
+                if (electricFloors.Count > 0)
+                {
+                    resultFloor = electricFloors.First();
+                    return true;
+                }
             }
 
             if (entranceFloor < 0)
@@ -76,6 +87,11 @@ namespace Service
         private bool FloorHasSpace(Floor floor)
         {
             return floor.Spaces.Count(spaces => spaces.IsFree) > 0;
+        }
+
+        private bool FloorHasFreeElectricSpace(Floor floor)
+        {
+            return floor.Spaces.Count(spaces => spaces.IsFree && spaces.HaveElectricSupport) > 0;
         }
 
         private bool FloorHasCarNumber(Floor floor, string carNumber)

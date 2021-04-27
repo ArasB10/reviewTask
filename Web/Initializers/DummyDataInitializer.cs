@@ -18,14 +18,14 @@ namespace Web.Initializers
         public void CreateDummyData()
         {
             // Create test data here
-            _floorRepository.AddFloor(GetFloor(-2, 15, 3));
-            _floorRepository.AddFloor(GetFloor(-1, 15, 3));
-            _floorRepository.AddFloor(GetFloor(1, 10, 10));
-            _floorRepository.AddFloor(GetFloor(2, 10, 10));
-            _floorRepository.AddFloor(GetFloor(3, 10, 3));
+            _floorRepository.AddFloor(GetFloor(-2, 15, 3,0));
+            _floorRepository.AddFloor(GetFloor(-1, 15, 3,0));
+            _floorRepository.AddFloor(GetFloor(1, 10, 10,2));
+            _floorRepository.AddFloor(GetFloor(2, 10, 10,2));
+            _floorRepository.AddFloor(GetFloor(3, 10, 10,1));
         }
 
-        private Floor GetFloor(int floorNumber, int maxSpace, int initialCars)
+        private Floor GetFloor(int floorNumber, int maxSpace, int initialCars, int evSpaceCount)
         {
             var floor = new Floor();
             floor.Id = Guid.NewGuid();
@@ -41,14 +41,19 @@ namespace Web.Initializers
                     floor.Spaces.Add(new Space()
                     {
                         IsFree = false,
-                        CarNumber = RandomString(6)
+                        CarNumber = RandomString(6),
+                        HaveElectricSupport = i < evSpaceCount
                     });
                 }
                 else
                 {
-                    floor.Spaces.Add(new Space());
+                    floor.Spaces.Add(new Space()
+                    {
+                        IsFree = true,
+                        HaveElectricSupport = i < evSpaceCount
+                    });
                 }
-                
+
             }
 
             return floor;
