@@ -1,8 +1,20 @@
-﻿@{
+﻿@model Web.ViewModels.FloorsViewModel;
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Parking loot</h1>
+
+    <div id="parking-lot-data">
+        <div id="data-wrapper">
+            @{ Html.RenderPartial("Data.cshtml", Model); }
+        </div>
+    </div>
+    <div id="parking-form">
+        <input id="input-license-plate" />
+        <button id="suggest-and-park">Find parking spot</button>
+    </div>
+    <div id="Suggestion"></div>
+    <div id="Errors"></div>
 </div>

@@ -5,23 +5,21 @@ $(document).ready(function() {
 
     $('#suggest-and-park').click(function(e) {
         e.preventDefault();
-
-        var parkingLotId = $('#Id').val();
+        //var parkingLotId = $('#Id').val();
         var licensePlate = $('#input-license-plate').val();
-        var floorId = $('#input-boom-barrier-floors').val();
-
+        //var floorId = $('#input-boom-barrier-floors').val();
         $.ajax('ParkingLot/SuggestFloor',
             {
                 cache: false,
                 method: 'POST',
                 data: {
-                    parkingLotId: parkingLotId,
+                    //parkingLotId: parkingLotId,
                     licensePlateNumber: licensePlate,
-                    entranceFloorId: floorId
+                    //entranceFloorId: floorId
                 },
                 success: function (response) {
                     if (response.isSuccess) {
-                        $('#Suggestion').show().html('Suggested parking floor: ' + response.suggestedFloor.floorNumber).fadeOut(5000);
+                        $('#Suggestion').show().html('Suggested parking floor: ' + response.suggestedFloor.floorNumber).fadeOut(10000);
                         ParkCar(response.suggestedFloor.id, licensePlate);
                     }
                     else {

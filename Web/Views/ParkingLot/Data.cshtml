@@ -1,0 +1,23 @@
+﻿@using Domain
+@model Web.ViewModels.FloorsViewModel;
+
+@{
+    foreach (var floor in Model.Floors)
+    {
+        <div>Floor number: @floor.FloorNumber, Free spaces: @floor.Spaces.Count(x => x.IsFree) </div>
+        foreach (var space in floor.Spaces)
+        {
+           
+            if (space.IsFree)
+            {
+                <div>Space: Free</div>
+            }
+            else
+            {
+                <div>Space: Car number @space.CarNumber</div>
+            }
+
+        }
+    }
+}
+}
