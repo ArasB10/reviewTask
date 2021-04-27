@@ -33,7 +33,7 @@ namespace ParkingLotUnitTests
             var floorService = new FloorService(floorRepository);
 
             Floor floor;
-            var result = floorService.FindParkFloor(carNumber, out floor);
+            var result = floorService.FindParkFloor(carNumber, out floor, 1);
             Assert.AreEqual(expectedResult, result);
         }
 

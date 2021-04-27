@@ -34,6 +34,11 @@ namespace Service
 
             var floors = _floorRepository.GetAllFloors().Where(FloorHasSpace).ToList();
 
+            if (floors.Count == 0)
+            {
+                return false;
+            }
+
             if (entranceFloor < 0)
             {
                 resultFloor = floors.Aggregate((x, y) => Math.Abs(x.FloorNumber - entranceFloor) < Math.Abs(y.FloorNumber - entranceFloor) ? x : y);
