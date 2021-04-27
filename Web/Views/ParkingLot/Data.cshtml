@@ -4,20 +4,21 @@
 @{
     foreach (var floor in Model.Floors)
     {
-        <div>Floor number: @floor.FloorNumber, Free spaces: @floor.Spaces.Count(x => x.IsFree) </div>
-        foreach (var space in floor.Spaces)
+    <div style="padding-bottom: 20px; text-align: left">
+        <div>Floor number: @floor.FloorNumber, Free spaces: @floor.Spaces.Count(x => x.IsFree)</div>
+        @foreach (var space in floor.Spaces)
         {
-           
-            if (space.IsFree)
-            {
-                <div>Space: Free</div>
-            }
-            else
-            {
-                <div>Space: Car number @space.CarNumber</div>
-            }
+
+        if (space.IsFree)
+        {
+        <span>Free</span>
+        }
+        else
+        {
+        <span> @space.CarNumber</span>
+        }
 
         }
+    </div>
     }
-}
 }
