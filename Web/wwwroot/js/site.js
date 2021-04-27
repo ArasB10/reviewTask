@@ -19,7 +19,7 @@ $(document).ready(function() {
                 },
                 success: function (response) {
                     if (response.isSuccess) {
-                        $('#Suggestion').show().html('Suggested parking floor: ' + response.suggestedFloor.floorNumber).fadeOut(10000);
+                        $('#Suggestion').show().html('Suggested parking floor: ' + response.suggestedFloor.floorNumber).fadeOut(5000);
                         ParkCar(response.suggestedFloor.id, licensePlate);
                     }
                     else {

@@ -16,6 +16,8 @@ namespace Web
 
             services.AddTransient<IFloorService, FloorService>();
 
+            services.AddTransient<INumberPlateValidator, NumberPlateValidator>();
+
             services.AddTransient<DummyDataInitializer>();
 
             return services;
