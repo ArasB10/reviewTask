@@ -9,7 +9,7 @@ namespace Service
     public interface IFloorService
     {
         IList<Floor> GetAllFloors();
-        bool FindParkFloor(string carNumber, out Floor resultFloor);
+        bool FindParkFloor(string carNumber, out Floor resultFloor, int entranceFloor);
         bool ParkCar(Guid floorId, string carNumber);
         bool CarNumberExists(string carNumber);
     }
@@ -28,12 +28,20 @@ namespace Service
             return _floorRepository.GetAllFloors();
         }
 
-        public bool FindParkFloor(string carNumber, out Floor resultFloor)
+        public bool FindParkFloor(string carNumber, out Floor resultFloor, int entranceFloor)
         {
             resultFloor = new Floor();
 
-            var floors = _floorRepository.GetAllFloors();
-            resultFloor = floors.FirstOrDefault(FloorHasSpace);
+            var floors = _floorRepository.GetAllFloors().Where(FloorHasSpace).ToList();
+
+            if (entranceFloor < 0)
+            {
+                resultFloor = floors.Aggregate((x, y) => Math.Abs(x.FloorNumber - entranceFloor) < Math.Abs(y.FloorNumber - entranceFloor) ? x : y);
+            }
+            else
+            {
+                resultFloor = floors.Aggregate((x, y) => Math.Abs(Math.Abs(x.FloorNumber) - entranceFloor) < Math.Abs(Math.Abs(y.FloorNumber) - entranceFloor) ? x : y);
+            }
 
             return resultFloor != null;
         }

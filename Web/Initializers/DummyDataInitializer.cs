@@ -18,8 +18,10 @@ namespace Web.Initializers
         public void CreateDummyData()
         {
             // Create test data here
-            _floorRepository.AddFloor(GetFloor(1, 10, 5));
-            _floorRepository.AddFloor(GetFloor(2, 10, 3));
+            _floorRepository.AddFloor(GetFloor(-2, 15, 3));
+            _floorRepository.AddFloor(GetFloor(-1, 15, 3));
+            _floorRepository.AddFloor(GetFloor(1, 10, 10));
+            _floorRepository.AddFloor(GetFloor(2, 10, 10));
             _floorRepository.AddFloor(GetFloor(3, 10, 3));
         }
 
@@ -62,11 +64,22 @@ namespace Web.Initializers
 
         private List<int> GetRandomPositions(int maxSpace, int initialCars)
         {
+            if (maxSpace == initialCars)
+            {
+                return Enumerable.Range(0, maxSpace).ToList();
+            }
+
             List<int> initialCarPositions = new List<int>();
             Random random = new Random();
+            int number;
             for (int i = 0; i < initialCars; i++)
             {
-                initialCarPositions.Add(random.Next(0, maxSpace-1));
+                do
+                {
+                    number = random.Next(1, maxSpace - 1);
+                } while (initialCarPositions.Contains(number));
+
+                initialCarPositions.Add(number);
             }
 
             return initialCarPositions;

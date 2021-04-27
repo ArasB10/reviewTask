@@ -38,7 +38,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult SuggestFloor(string licensePlateNumber)
+        public ActionResult SuggestFloor(string licensePlateNumber, int entranceFloor)
         {
             if (!_numberPlateValidator.Validate(licensePlateNumber))
             {
@@ -51,7 +51,7 @@ namespace Web.Controllers
             }
 
             Floor floor;
-            var result = _floorService.FindParkFloor(licensePlateNumber, out floor);
+            var result = _floorService.FindParkFloor(licensePlateNumber, out floor, entranceFloor);
             
             if (result)
             {

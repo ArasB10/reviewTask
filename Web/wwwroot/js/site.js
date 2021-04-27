@@ -7,7 +7,8 @@ $(document).ready(function() {
         e.preventDefault();
         //var parkingLotId = $('#Id').val();
         var licensePlate = $('#input-license-plate').val();
-        //var floorId = $('#input-boom-barrier-floors').val();
+        //var floorNumber = $('#input-boom-barrier-floors').val();
+        var floorNumber = $("#floorSelect option:selected").val();
         $.ajax('ParkingLot/SuggestFloor',
             {
                 cache: false,
@@ -15,7 +16,7 @@ $(document).ready(function() {
                 data: {
                     //parkingLotId: parkingLotId,
                     licensePlateNumber: licensePlate,
-                    //entranceFloorId: floorId
+                    entranceFloor: floorNumber
                 },
                 success: function (response) {
                     if (response.isSuccess) {
