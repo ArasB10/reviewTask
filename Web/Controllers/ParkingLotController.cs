@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Service;
 using Web.ViewModels;
 
@@ -11,11 +12,13 @@ namespace Web.Controllers
     {
         private readonly IFloorService _floorService;
         private readonly INumberPlateValidator _numberPlateValidator;
+        private readonly ILogger _logger;
 
-        public ParkingLotController(IFloorService floorService, INumberPlateValidator numberPlateValidator)
+        public ParkingLotController(IFloorService floorService, INumberPlateValidator numberPlateValidator, ILogger<ParkingLotController> logger)
         {
             _floorService = floorService;
             _numberPlateValidator = numberPlateValidator;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -64,6 +67,8 @@ namespace Web.Controllers
         public ActionResult ParkCar(Guid floorId, string licensePlateNumber)
         {
             var result = _floorService.ParkCar(floorId, licensePlateNumber);
+
+            _logger.LogInformation($"Park car: License plate number: {licensePlateNumber}, isSuccessful: {result} Date: {DateTime.UtcNow}");
 
             return Json(new ParkingLotResponse { IsSuccess = result });
         }
